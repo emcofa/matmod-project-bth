@@ -13,6 +13,7 @@ import linear
 import transformation
 import residual
 
+
 def main():
     """
     function data menu
@@ -35,43 +36,42 @@ def main():
         choice_list = choice_string.split(" ")
         choice = choice_list[0]
 
-
         if choice == "q":
             print("Avslutar med statuskod 0")
             break
 
         elif choice == "1":
             print("Hämtar ny datar från SMHI:s API och uppdaterar CSV-filer...")
-            # gotska_sando.gotska_sando_data()
-            # malilla.malilla_data()
-            # gladhammar.gladhammar_data()
-            # print("Data hämtad.")
-                    
+            gotska_sando.gotska_sando_data()
+            malilla.malilla_data()
+            gladhammar.gladhammar_data()
+            print("Data hämtad.")
+
         elif choice == "2":
             sample.sample_data()
-            
+
         elif choice == "3":
             show_data.visualize_data()
-        
+
         elif choice == "4":
             describe_data.describe_data_csv()
-        
+
         elif choice == "5":
             heatmap.heatmap()
-        
+
         elif choice == "6":
             plots.normal_distribution()
-        
+
         elif choice == "7":
             linear.linear_regression()
-        
+
         elif choice == "8":
             transformation.transformation()
-        
+
         elif choice == "9":
             residual.residual()
         input("\nTryck på enter för att komma vidare...")
-        
+
 
 if __name__ == "__main__":
     main()

@@ -23,8 +23,6 @@ def gladhammar_data():
 
     time = convert_to_datetime(timstamp)
 
-    print(time)
-
     df['date'] = df['date'].apply(convert_to_datetime)
     # print(df.head(2000).to_csv('./data/gladhammar-test.csv', sep=',', encoding='utf-8'))
     print(df.to_csv('./data/gladhammar.csv', sep=',', encoding='utf-8'))
