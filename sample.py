@@ -10,7 +10,7 @@ def sample_data():
     
     df.reset_index(inplace=False)
 
-    # Visa upp de första fem raderna i tabellen
+    # Visar upp de första fem raderna i tabellen
     print("Urval av data från väderstation Gotska Sandön")
     print("----------------------------------------------------")
     print(df.head())

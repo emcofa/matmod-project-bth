@@ -13,7 +13,7 @@ def transformation():
     Transformerar data till en exponentiell modell
     Transformeras sedan tillbaka för att kunna jämföra originaldata med linjär regression
     """
-    # Läs in csv-filen och konvertera datevärdena till datumobjekt
+    # Läser in csv-filen och konvertera datevärdena till datumobjekt
     df = pd.read_csv("./data/gladhammar.csv")
     df["date"] = pd.to_datetime(df["date"])
     df["date"] = mdates.date2num(df["date"])
@@ -24,13 +24,13 @@ def transformation():
     y_min = np.min(y)
     constant = 10
 
-    # Konvertera negativa värden till positiva
+    # Konverterar negativa värden till positiva
     if y_min < 0:
         df["log_value"] = np.log(y - y_min + constant)
     else:
         df["log_value"] = np.log(y)
 
-    # Skapa och träna en ny regressionsmodell med 'log_value' som förklarande variabel och 'date' som beroende variabel
+    # Skapar och tränar en ny regressionsmodell med 'log_value' som förklarande variabel och 'date' som beroende variabel
     exp_model = smf.ols("log_value ~ date", df)
     exp_results = exp_model.fit()
 
@@ -38,13 +38,13 @@ def transformation():
     alpha = 0.05
     exp_predictions = exp_results.get_prediction(df).summary_frame(alpha)
 
-    # Transformera tillbaka modellen och förutsägelserna innan du plottar dem
+    # Transformerar tillbaka modellen och förutsägelserna innan de plottas
     if y_min < 0:
         exp_model = np.exp(exp_predictions["mean"]) + y_min - constant
     else:
         exp_model = np.exp(exp_predictions["mean"])
 
-    # Skapa och träna en ny linjär regressionsmodell med 'date' som förklarande variabel och 'value' som beroende variabel
+    # Skapar och tränar en ny linjär regressionsmodell med 'date' som förklarande variabel och 'value' som beroende variabel
     lin_model = smf.ols("value ~ date", df)
     lin_results = lin_model.fit()
 

@@ -41,29 +41,29 @@ def residual():
     alpha = 0.05
     exp_predictions = exp_results.get_prediction(df).summary_frame(alpha)
 
-    # Transformera tillbaka modellen och förutsägelserna innan du plottar dem
+    # Transformera tillbaka modellen och förutsägelserna innan de plottas
     if y_min < 0:
         exp_model = np.exp(exp_predictions["mean"]) + y_min - constant
     else:
         exp_model = np.exp(exp_predictions["mean"])
 
-    # Skapa och träna en ny linjär regressionsmodell med 'date' som förklarande variabel och 'value' som beroende variabel
+    # Skapar och tränar en ny linjär regressionsmodell med 'date' som förklarande variabel och 'value' som beroende variabel
     lin_model = smf.ols("value ~ date", df)
     lin_results = lin_model.fit()
 
     # Kondifensintervall 95%
     lin_predictions = lin_results.get_prediction(df).summary_frame(alpha)
 
-    # Beräkna residualerna för linjär modell 𝑒= 𝑦−𝑦̂
+    # Beräknar residualerna för linjär modell 𝑒= 𝑦−𝑦̂
     lin_residuals = df["value"] - lin_predictions["mean"]
 
-    # Beräkna residualerna för exponentiell modell 𝑒= 𝑦−𝑦̂
+    # Beräknar residualerna för exponentiell modell 𝑒= 𝑦−𝑦̂
     exp_residuals = df["value"] - exp_model
 
     date_formatter = mdates.DateFormatter("%Y-%m-%d")
     plt.gca().xaxis.set_major_formatter(date_formatter)
 
-    # Plotta residualerna för linjär modell
+    # Plottar residualerna för linjär modell
     plt.scatter(
         df["date"], lin_residuals, label="Linjär modell Residualer", s=6, color="blue"
     )
@@ -80,10 +80,10 @@ def residual():
     plt.legend()
     plt.show()
 
-    # Plotta residualerna för linjär modell mot normalfördelningen
+    # Plottar residualerna för linjär modell mot normalfördelningen
     sns.distplot(lin_residuals, label="Linjär modell residualer")
 
-    # Plotta residualerna för exponentiell modell mot normalfördelningen
+    # Plottar residualerna för exponentiell modell mot normalfördelningen
     sns.distplot(exp_residuals, label="Exponentiell modell residualer")
 
     plt.xlabel("Residualer")
@@ -91,10 +91,10 @@ def residual():
     plt.legend()
     plt.show()
 
-    # Beräkna variansen för residualerna för linjär modell
+    # Beräknar variansen för residualerna för linjär modell
     lin_variance = np.var(lin_residuals)
 
-    # Beräkna variansen för residualerna för exponentiell modell
+    # Beräknar variansen för residualerna för exponentiell modell
     exp_variance = np.var(exp_residuals)
 
     # Jämför variansen för de två modellerna och argumentera för vilken modell som är bäst lämpad för data

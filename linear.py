@@ -14,7 +14,7 @@ def linear_regression():
     konfidensintervall av dessa. Visualisera detta i en graf med den linjära modellen, konfidensintervallet
     och originaldata i samma figur.
     """
-    # Läs in csv-filen och konvertera datevärdena till datumobjekt
+    # Läser in csv-filen och konvertera datevärdena till datumobjekt
     df = pd.read_csv("./data/gladhammar.csv")
     df["date"] = pd.to_datetime(df["date"])
     df["date"] = mdates.date2num(df["date"])
@@ -22,12 +22,12 @@ def linear_regression():
     model = smf.ols("value ~ date", df)
     results = model.fit()
 
-    # Räkna ut a och b samt x och y
+    # Räknar ut a och b samt x och y
     a, b = results.params
     x = df["date"]
     y = a + b * x
 
-    # Skapa konfidensintervall
+    # Skapar konfidensintervall
     conf_int = results.conf_int()
 
     # Kondifensintervall 95%
@@ -60,7 +60,6 @@ def linear_regression():
     plt.scatter(
         df["date"], df["value"], label="Originaldata Gladhammar", s=6, color="red"
     )
-    # plt.plot(df['date'], predictions['mean'], linewidth=1, label='Regressionslinje Gladhammar')
     plt.fill_between(
         df["date"],
         predictions["mean_ci_lower"],
