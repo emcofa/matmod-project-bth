@@ -6,6 +6,7 @@ import seaborn as sns
 import matplotlib.dates as mdates
 import statsmodels.formula.api as smf
 import seaborn as sns
+from scipy.stats import norm
 
 
 def residual():
@@ -80,15 +81,16 @@ def residual():
     plt.legend()
     plt.show()
 
-    # Plottar residualerna för linjär modell mot normalfördelningen
-    sns.distplot(lin_residuals, label="Linjär modell residualer")
-
-    # Plottar residualerna för exponentiell modell mot normalfördelningen
-    sns.distplot(exp_residuals, label="Exponentiell modell residualer")
-
-    plt.xlabel("Residualer")
+    sns.distplot(lin_residuals, fit=norm, kde=False, label="Linjär modell residualer")
+    plt.xlabel("Residualer Linjär modell")
     plt.ylabel("Frekvens")
-    plt.legend()
+    plt.show()
+
+    sns.distplot(
+        exp_residuals, fit=norm, kde=False, label="Exponentiell modell residualer"
+    )
+    plt.xlabel("Residualer Exponentiell modell")
+    plt.ylabel("Frekvens")
     plt.show()
 
     # Beräknar variansen för residualerna för linjär modell
